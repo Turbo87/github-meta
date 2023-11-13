@@ -1,0 +1,61 @@
+name: Update
+
+on:
+  # run if manually triggered
+  workflow_dispatch:
+
+  # run if something on the `main` branch changes
+  push:
+    branches:
+      - main
+      - auto-update # TODO
+
+  # run every hour at XX:42
+  schedule:
+    - cron: "42 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: run
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - run: ./update-data.sh
+
+      - run: git config user.name 'github-actions[bot]'
+      - run: git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - run: git diff --exit-code
+        id: git-diff
+        continue-on-error: true
+
+      - run: cargo run --package bump_version
+        id: bump-version
+        if: steps.git-diff.outcome == 'failure'
+
+      - run: cargo generate-lockfile
+        if: steps.git-diff.outcome == 'failure'
+
+      - run: git commit --all --message "v${{ steps.bump-version.outputs.version }} (automated update)"
+        if: steps.git-diff.outcome == 'failure'
+
+      - run: git tag "v${{ steps.bump-version.outputs.version }}"
+        if: steps.git-diff.outcome == 'failure'
+
+#      - run: cargo publish
+#        if: steps.git-diff.outcome == 'failure'
+#        env:
+#          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+#      - run: git push
+#        if: steps.git-diff.outcome == 'failure'
+#
