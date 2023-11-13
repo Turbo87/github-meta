@@ -1,19 +1,21 @@
 {
-  "extends": [
-    "config:best-practices",
-    ":maintainLockFilesWeekly",
-    ":semanticCommitsDisabled",
-    ":automergeLinters",
-    ":automergeTesters",
-    "regexManagers:dockerfileVersions",
-    "regexManagers:githubActionsVersions",
-    "github>Turbo87/renovate-config//commitTopics",
-    "github>Turbo87/renovate-config//rust/updateToolchain",
+  extends: [
+    'config:best-practices',
+    ':maintainLockFilesWeekly',
+    ':semanticCommitsDisabled',
+    ':automergeLinters',
+    ':automergeTesters',
+    'regexManagers:dockerfileVersions',
+    'regexManagers:githubActionsVersions',
+    'github>Turbo87/renovate-config//commitTopics',
+    'github>Turbo87/renovate-config//rust/updateToolchain',
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "depTypeList": ["devDependencies"],
-      "automerge": true
-    }
-  ]
+      matchDepTypes: [
+        'devDependencies',
+      ],
+      automerge: true,
+    },
+  ],
 }
