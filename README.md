@@ -4,6 +4,17 @@ github-meta
 <https://api.github.com/meta> as const structs
 
 
+Description
+------------------------------------------------------------------------------
+
+If the data from <https://api.github.com/meta> is used in a Rust program, it
+can be slow to fetch it every time. This crate provides the data as const
+structs, so it can be compiled into the program.
+
+An hourly GitHub Actions workflow updates the data in this crate automatically
+and releases a new version of the crate if the data has changed.
+
+
 Usage
 ------------------------------------------------------------------------------
 
