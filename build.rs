@@ -31,7 +31,7 @@ fn generate_types_module() -> Result<(), Box<dyn Error>> {
         .replace("#[serde(rename_all = \"SCREAMING_SNAKE_CASE\")]\n", "")
         .replace("String", "&'static str")
         .replace("Vec<", "&'static [")
-        .replace('>', "]");
+        .replace(">,", "],");
 
     file.write_all(types.as_bytes())?;
 

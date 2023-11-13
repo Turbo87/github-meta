@@ -1,5 +1,6 @@
 use serde::Deserialize;
 
+/// The root object of <https://api.github.com/meta>.
 #[derive(Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Meta {
@@ -19,6 +20,7 @@ pub struct Meta {
     pub domains: Domains,
 }
 
+/// The `ssh_key_fingerprints` object of <https://api.github.com/meta>.
 #[derive(Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
@@ -28,6 +30,7 @@ pub struct SshKeyFingerprints {
     pub sha256_rsa: String,
 }
 
+/// The `domains` object of <https://api.github.com/meta>.
 #[derive(Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Domains {
@@ -37,12 +40,15 @@ pub struct Domains {
     pub packages: Vec<String>,
 }
 
+/// The root object of <https://api.github.com/meta/public_keys/secret_scanning>.
 #[derive(Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct SecretScanning {
     pub public_keys: Vec<PublicKey>,
 }
 
+/// The objects inside the `public_keys` list of
+/// <https://api.github.com/meta/public_keys/secret_scanning>.
 #[derive(Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct PublicKey {
