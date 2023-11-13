@@ -15,6 +15,9 @@ fn main() {
     // Increase minor version
     let new_version = semver::Version {
         minor: version.minor + 1,
+        patch: 0,
+        pre: semver::Prerelease::EMPTY,
+        build: semver::BuildMetadata::EMPTY,
         ..version
     };
 
