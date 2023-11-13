@@ -17,5 +17,11 @@
       ],
       automerge: true,
     },
+    {
+      matchUpdateTypes: [
+        'lockFileMaintenance',
+      ],
+      automerge: true,
+    },
   ],
 }
